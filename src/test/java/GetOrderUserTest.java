@@ -47,7 +47,7 @@ public class GetOrderUserTest {
         ingredients.add(TestValue.FILLING_ONE_TEST);
         ingredients.add(TestValue.FILLING_TWO_TEST);
         StellarOrder StellarOrder = new StellarOrder(ingredients);
-        ValidatableResponse response = orderClient.orderWithAuth(accessToken, StellarOrder)
+        orderClient.orderWithAuth(accessToken, StellarOrder)
                 .assertThat().statusCode(HTTP_OK);
         ValidatableResponse getOrdersResponse = orderClient.getOrderUserAuth(accessToken)
                 .assertThat().statusCode(HTTP_OK);
@@ -70,7 +70,7 @@ public class GetOrderUserTest {
         ingredients.add(TestValue.FILLING_ONE_TEST);
         ingredients.add(TestValue.FILLING_TWO_TEST);
         StellarOrder StellarOrder = new StellarOrder(ingredients);
-        ValidatableResponse response = orderClient.orderWithAuth(accessToken, StellarOrder)
+        orderClient.orderWithAuth(accessToken, StellarOrder)
                 .assertThat().statusCode(HTTP_OK);
         ValidatableResponse getOrdersResponse = orderClient.getOrderUserNotAuth()
                 .assertThat().statusCode(HTTP_UNAUTHORIZED);

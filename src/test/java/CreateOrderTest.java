@@ -44,7 +44,7 @@ public class CreateOrderTest {
         ingredients.add(TestValue.FILLING_ONE_TEST);
         ingredients.add(TestValue.FILLING_TWO_TEST);
         StellarOrder StellarOrder = new StellarOrder(ingredients);
-        ValidatableResponse response = orderClient.orderWithoutAuth(StellarOrder)
+        orderClient.orderWithoutAuth(StellarOrder)
                 .assertThat().statusCode(HTTP_OK);
     }
 
@@ -57,7 +57,7 @@ public class CreateOrderTest {
         ingredients.add(TestValue.BAD_BUN_TEST);
         ingredients.add(TestValue.FILLING_ONE_TEST);
         StellarOrder StellarOrder = new StellarOrder(ingredients);
-        ValidatableResponse response = orderClient.orderWithoutAuth(StellarOrder)
+        orderClient.orderWithoutAuth(StellarOrder)
                 .assertThat().statusCode(HTTP_INTERNAL_ERROR);
     }
 
@@ -125,7 +125,7 @@ public class CreateOrderTest {
         ingredients.add(TestValue.BAD_BUN_TEST);
         ingredients.add(TestValue.FILLING_TWO_TEST);
         StellarOrder StellarOrder = new StellarOrder(ingredients);
-        ValidatableResponse response = orderClient.orderWithAuth(accessToken, StellarOrder)
+        orderClient.orderWithAuth(accessToken, StellarOrder)
                 .assertThat().statusCode(HTTP_INTERNAL_ERROR);
     }
 

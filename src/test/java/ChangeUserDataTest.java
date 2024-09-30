@@ -10,6 +10,7 @@ import testValue.TestValue;
 import user.UserClient;
 
 import static java.net.HttpURLConnection.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 /**
  3. Изменение данных пользователя:
@@ -24,7 +25,7 @@ public class ChangeUserDataTest {
     public void setUp() {
         userClient = new UserClient();
         StellarUser StellarUser = new StellarUser(TestValue.LOGIN_ONE_TEST, TestValue.PASSWORD_ONE_TEST, TestValue.TEST_NAME_ONE);
-        ValidatableResponse response = userClient.createUser(StellarUser);
+        userClient.createUser(StellarUser);
     }
 
     @After
@@ -35,7 +36,7 @@ public class ChangeUserDataTest {
             ValidatableResponse loginResponse = userClient.userLogin(StellarUserTwo);
             String accessTokenWithBearer = loginResponse.extract().path("accessToken");
             String accessToken = accessTokenWithBearer.replace("Bearer ", "");
-            ValidatableResponse responseDelete = userClient.deleteUser(accessToken);
+            userClient.deleteUser(accessToken);
             System.out.println("удален");
         } catch (Exception e) {
             System.out.println("Пользователь не удалился");
@@ -52,8 +53,9 @@ public class ChangeUserDataTest {
         String accessTokenWithBearer = loginResponse.extract().path("accessToken");
         String accessToken = accessTokenWithBearer.replace("Bearer ", "");
         StellarUser StellarUserTwo = new StellarUser(TestValue.LOGIN_TWO_TEST, TestValue.PASSWORD_TWO_TEST, TestValue.TEST_NAME_TWO);
-        ValidatableResponse responseUpdate = userClient.updateUser(accessToken, StellarUserTwo)
-                .assertThat().statusCode(HTTP_OK);
+        ValidatableResponse responseUpdate = userClient.updateUser(accessToken, StellarUserTwo);
+        responseUpdate.assertThat().statusCode(HTTP_OK);
+        responseUpdate.assertThat().body("success", equalTo(true));
     }
 
     @Test
